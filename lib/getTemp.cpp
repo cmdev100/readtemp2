@@ -4,6 +4,23 @@
 
 using namespace std;
 
+bool tryGetTemp(double &aTempValue)
+{
+    string lFileData;
+    if ( !tryGetFileData(lFileData) )
+    {
+        cerr << "Error: can't open the file.\n";
+        return false;     
+    }
+
+    if ( !tryGetTempFromData(lFileData, aTempValue) )
+    {
+        cerr << "Error: can't get the temp data.\n";
+        return false;
+    }
+    return true;
+}
+
 bool tryGetFileData(string &aFileData)
 {
     string lFullPath = FILE_PATH + ID + "/" + FILE_NAME;

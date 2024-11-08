@@ -7,25 +7,21 @@ using namespace std;
 
 int main()
 {
-    string lFileData;
-    if ( !tryGetFileData(lFileData) )
-    {
-        cerr << "Error: can't open the file.\n";
-        return 1;     
-    }
-
+    
     double lTempValue;
-    if ( !tryGetTempFromData(lFileData, lTempValue) )
+
+    if ( !tryGetTemp(lTempValue) )
     {
-        cerr << "Error: can't get the temp data.\n";
+        cout << "Couldn't get the temp value.\n";
         return 1;
     }
+    else
+    {
+        stringstream lStream;
 
-    stringstream lStream;
+        lStream << fixed << setprecision(2) << lTempValue;
 
-    lStream << fixed << setprecision(2) << lTempValue;
-
-    cout << "Temp is: " + lStream.str() + " °C\n";
-
+        cout << "Temperature is: " + lStream.str() + " °C\n";
+    } 
     return 0;
 }
