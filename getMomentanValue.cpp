@@ -18,9 +18,7 @@ int main()
     else
     {
         stringstream lStream;
-
         lStream << fixed << setprecision(2) << lTempValue;
-
         cout << "Temperature is: " + lStream.str() + " °C\n";
     } 
     return 0;

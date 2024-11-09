@@ -4,6 +4,9 @@
 
 using namespace std;
 
+bool tryGetFileData(string &aFileData);
+bool tryGetTempFromData(string aFileData, double &aTempValue);
+
 bool tryGetTemp(double &aTempValue)
 {
     string lFileData;
