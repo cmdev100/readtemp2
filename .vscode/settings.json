@@ -8,7 +8,8 @@
         "string_view": "cpp",
         "fstream": "cpp",
         "iomanip": "cpp",
-        "sstream": "cpp"
+        "sstream": "cpp",
+        "ctime": "cpp"
     },
     "C_Cpp.default.compilerPath": "/usr/bin/g++"
 }
