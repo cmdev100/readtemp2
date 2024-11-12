@@ -12,7 +12,8 @@
 				"-o",
 				"${fileDirname}/bin/${fileBasenameNoExtension}",
 				"-std=c++20",
-				"-lsqlite3"
+				"-lsqlite3",
+				"-Wno-psabi"
 			],
 			"options": {
 				"cwd": "${fileDirname}"
