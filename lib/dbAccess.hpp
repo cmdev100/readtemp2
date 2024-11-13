@@ -10,6 +10,10 @@ struct StoredValue {
   int Id;
   time_t Timestamp;
   double Value;
+  bool operator < (const StoredValue& cmp)
+  {
+    return Timestamp < cmp.Timestamp;
+  }
 };
 
 bool tryStoreValue(int aId, int aTimestamp, double aTempValue);

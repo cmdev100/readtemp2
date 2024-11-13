@@ -5,8 +5,6 @@
 
 const string qCreateTable = "CREATE TABLE IF NOT EXISTS TempData (ID INTEGER, TimeStamp INTEGER, Value REAL);";
 
-//static int callback(void *NotUsed, int argc, char **argv, char **azColName);
-
 bool tryCreateTable(sqlite3 **aConn);
 bool tryOpenDb(sqlite3 **aConn);
 
@@ -41,10 +39,9 @@ bool tryStoreValue(int aId, int aTimestamp, double aTempValue)
 void getValues(list<StoredValue> &aList, int aCount)
 {
     sqlite3 *conn;
-    //char *errMsg = 0;
     sqlite3_stmt* stmt;
 
-    string qSql = "SELECT * FROM 'TempData' ORDER BY Timestamp DESC LIMIT 5; "; //+ aCount;
+    string qSql = "SELECT * FROM 'TempData' ORDER BY Timestamp DESC LIMIT " + to_string(aCount);
 
     if ( tryOpenDb(&conn) )
     {
@@ -68,13 +65,17 @@ void getValues(list<StoredValue> &aList, int aCount)
         struct StoredValue lSV;
         
         while(!done)
-        { //while we are still reading rows from the table
+        { 
             switch(sqlite3_step(stmt))
             {
-                case SQLITE_ROW: //case sqlite3_step has another row ready
+                case SQLITE_ROW: 
+                    lSV.Id = - 1;
+                    lSV.Timestamp = 0;
+                    lSV.Value = -1;
+
                     for ( int i = 0; i < NoOfCols; i++ )
-                    { //iterate through the columns and get data for each column
-                        const char* colName =  sqlite3_column_name(stmt, i); //get the column name
+                    {
+                        const char* colName =  sqlite3_column_name(stmt, i); 
                         
                         if ( strcmp(COL_ID, colName) == 0 )
                             lSV.Id = sqlite3_column_int(stmt, i);
@@ -85,17 +86,20 @@ void getValues(list<StoredValue> &aList, int aCount)
                         else
                             continue;                                                 
                     }                    
-                    aList.push_back(lSV);                
+                    if ( lSV.Id != -1 )
+                        aList.push_back(lSV);                
                     break;
-                case SQLITE_DONE: //case sqlite3_step() has finished executing
-                    //printf("done reading all rows \n");
-                    sqlite3_finalize(stmt); //destroy the prepared statement object
+                case SQLITE_DONE:
+                    sqlite3_finalize(stmt);
                     done = true;
                     break;
             }
         }
     }
     
+    // Sort list by timestamp.
+    aList.sort();
+
     sqlite3_close(conn);   
 }
 
@@ -125,35 +129,3 @@ bool tryOpenDb(sqlite3 **aConn)
     
     return true;
 }
-
-/*
-static int callback(void *NotUsed, int argc, char **argv, char **azColName) 
-{
-   int i;
-   char* lId;
-   char* lTimestamp;
-   char* lValue;
-
-   string Col_Id = "Id";
-
-   for ( i = 0; i < argc; i++ ) 
-   {
-        if ( azColName[i] = Col_Id.c_str() )
-            lId = argv[i];
-        else if ( azColName[i] = "Timestamp" )
-            lTimestamp = argv[i];
-        else if ( azColName[i] = "Value" )
-            lValue = argv[i];
-        int lID;
-        time_t lTimestamp2;
-        double lValue2;
-
-        sscanf(lId, "%d", &lID);
-        sscanf(lTimestamp, "%d", &lTimestamp2);
-        sscanf(lValue, "%f", &lValue2);
-
-   }
-   
-   return 0;
-}
-*/

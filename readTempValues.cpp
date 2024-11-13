@@ -5,13 +5,31 @@
 
 using namespace std;
 
-int main()
-{
+int main(int argc, char *argv[])
+{   
     list<StoredValue> lValueList;
     char aBuffer[21];
-    int lCount = 5;
-
-    getValues(lValueList, lCount);
+    const int DEFAULT_COUNT = 5;
+    int lCount;    
+    string lErrMsg = "Wrong or no count param, using 5.";
+    
+    if ( argc == 2 )
+    {
+        try {
+            lCount = stoi(argv[1]);
+        }    
+        catch (...) {
+            cout << lErrMsg << endl;
+            lCount = DEFAULT_COUNT;
+        }
+    }    
+    else
+    {
+        lCount = DEFAULT_COUNT;
+        cout << lErrMsg << endl;
+    }   
+        
+    getValues(lValueList, lCount);      
 
     for ( StoredValue lVal : lValueList )
     {
