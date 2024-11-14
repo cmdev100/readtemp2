@@ -20,7 +20,7 @@ int main()
     {
         // Id for the sensor. (primary key)
         int lId = 1;
-                
+                l
         // Get current timestamp.
         time_t timestamp = time(0); 
         
@@ -28,8 +28,8 @@ int main()
         {     
             stringstream lStream;
             lStream << fixed << setprecision(2) << lTempValue;
-            char aBuffer[sizeof("2011-10-08 07:07:09")];
-            strftime(aBuffer, sizeof(aBuffer), "%F %T", gmtime(&timestamp));
+            char aBuffer[21];
+            strftime(aBuffer, sizeof(aBuffer), "%F %T", localtime(&timestamp));
             cout << "Current value (" + lStream.str() + " °C) stored at " + aBuffer + ".\n";
         }            
         else
