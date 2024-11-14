@@ -20,7 +20,7 @@ int main()
     {
         // Id for the sensor. (primary key)
         int lId = 1;
-                l
+                
         // Get current timestamp.
         time_t timestamp = time(0); 
         
