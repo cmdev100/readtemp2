@@ -13,4 +13,4 @@ There are four executables:
 - **readTempValues** prints the desired count of stored values to the console. Default is 5.
 - **storeCurrentValue** stores the current value and timestamp in the database.
 
-The values are stored in a sqlite database along with the executables. The database file is called readtemp.db.
+The values are stored in a sqlite database in the same location as the executables. The database file name is 'readtemp.db'.
