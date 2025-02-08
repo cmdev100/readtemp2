@@ -31,5 +31,9 @@
 *.out
 *.app
 
+# Other
+*.log
+*.db
+
 # bin folder
 bin/
